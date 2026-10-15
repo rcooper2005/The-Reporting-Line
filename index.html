@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Should this be reported? Georgia Code of Ethics scenarios for preservice teachers, from the principal and SOE professor desks.">
+<meta name="author" content="Dr. Rebecca Cooper">
+<title>The Reporting Line</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@500;700&display=swap">
+<style>
+html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Layout: an incident desk. Two desks (principal / SOE professor) as tabs, a stack of incident slips on the left, the open slip and decision form on the right, the ruling below. Sibling to The Hiring Desk. */
+:root{
+  --bg:#EDEEF3; --surface:#FFFFFF; --surface-2:#F4F5F9; --ink:#1A2030; --muted:#576072; --line:#D4D8E2;
+  --slip:#FFF4D6; --slip-edge:#E9C964; --slip-ink:#4A3A0E;
+  --signal:#D9480F; --signal-ink:#FFFFFF; --signal-bg:#FFE8DC;
+  --code:#2F4FA8; --code-bg:#E6ECFB;
+  --yes:#B42318; --yes-bg:#FCE8E6; --no:#17784A; --no-bg:#E3F4EA; --part:#8A5A00; --part-bg:#FFF1CC;
+  --link:#1F5FBF;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10131A; --surface:#191E28; --surface-2:#212734; --ink:#E6EAF1; --muted:#A2ABBA; --line:#2E3646;
+  --slip:#352D17; --slip-edge:#6B5824; --slip-ink:#F2DE9E;
+  --signal:#FF8A4C; --signal-ink:#1E0E00; --signal-bg:#3A2113;
+  --code:#8FA8F5; --code-bg:#1E2747;
+  --yes:#F2766A; --yes-bg:#3A1A17; --no:#53C78E; --no-bg:#16301F; --part:#F2C14E; --part-bg:#3A2E10;
+  --link:#7FB0FF; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#10131A; --surface:#191E28; --surface-2:#212734; --ink:#E6EAF1; --muted:#A2ABBA; --line:#2E3646;
+  --slip:#352D17; --slip-edge:#6B5824; --slip-ink:#F2DE9E;
+  --signal:#FF8A4C; --signal-ink:#1E0E00; --signal-bg:#3A2113;
+  --code:#8FA8F5; --code-bg:#1E2747;
+  --yes:#F2766A; --yes-bg:#3A1A17; --no:#53C78E; --no-bg:#16301F; --part:#F2C14E; --part-bg:#3A2E10;
+  --link:#7FB0FF; color-scheme:dark;}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 48px}
+a{color:var(--link)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+.wrap{max-width:1180px;margin:0 auto}
+.mono{font-family:var(--f-mono)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+button,select{font:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--signal);outline-offset:2px}
+
+.mast{padding-block:28px 22px;display:grid;gap:18px;grid-template-columns:minmax(0,1fr) auto;align-items:end;border-bottom:2px solid var(--ink)}
+.mast h1{font-size:clamp(34px,6vw,60px);font-weight:800;letter-spacing:-.02em}
+.mast h1 span{border-bottom:8px solid var(--signal)}
+.mast p{margin:10px 0 0;max-width:64ch;color:var(--muted)}
+.tally{display:flex;gap:10px;flex-wrap:wrap}
+.tally div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 14px;text-align:center;min-width:92px}
+.tally b{display:block;font-family:var(--f-display);font-size:26px;font-variant-numeric:tabular-nums}
+.tally small{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+@media (max-width:760px){.mast{grid-template-columns:1fr}}
+
+/* Quick reference strip */
+.ref{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0}
+.ref div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:15px}
+.ref b{display:block;font-family:var(--f-display);font-size:24px;color:var(--signal);font-variant-numeric:tabular-nums}
+@media (max-width:760px){.ref{grid-template-columns:1fr}}
+
+/* Desk tabs */
+.desks{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.desk-tab{border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:10px 18px;font-weight:700;display:flex;gap:10px;align-items:center}
+.desk-tab small{font-family:var(--f-mono);font-size:12px;color:var(--muted);font-weight:500}
+.desk-tab[aria-selected="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.desk-tab[aria-selected="true"] small{color:var(--surface);opacity:.8}
+.desk-intro{margin:0 0 16px;max-width:76ch;color:var(--muted)}
+
+.board{display:grid;grid-template-columns:280px minmax(0,1fr);gap:22px;align-items:start}
+@media (max-width:900px){.board{grid-template-columns:1fr}}
+.stack{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);display:flex;flex-direction:column;gap:6px}
+.item{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:9px 10px;color:var(--ink)}
+.item:hover{background:var(--surface-2)}
+.item[aria-current="true"]{background:var(--slip);border-color:var(--slip-edge);color:var(--slip-ink)}
+.item .no{font-family:var(--f-mono);font-size:12px;opacity:.75}
+.item .nm{font-weight:700;line-height:1.2}
+.pill{font-family:var(--f-mono);font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:2px 8px;white-space:nowrap}
+.pill.open{background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+.pill.full{background:var(--no-bg);color:var(--no)}
+.pill.part{background:var(--part-bg);color:var(--part)}
+.pill.miss{background:var(--yes-bg);color:var(--yes)}
+@media (max-width:900px){.stack{position:static;flex-direction:row;overflow-x:auto;padding-bottom:6px}.item{min-width:220px}}
+
+/* Slip */
+.slip{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.slip-head{background:var(--slip);color:var(--slip-ink);padding:20px 24px;border-bottom:2px dashed var(--slip-edge);display:grid;gap:4px}
+.slip-head h2{font-size:clamp(24px,3.4vw,34px);font-weight:800}
+.slip-head .meta{font-size:15px}
+.slip-body{padding:22px 24px;display:grid;gap:16px}
+.slip-body p{margin:0;max-width:72ch}
+.quote{border-left:4px solid var(--slip-edge);background:var(--surface-2);padding:12px 16px;border-radius:0 10px 10px 0;font-style:italic}
+.quote .who{display:block;font-style:normal;font-family:var(--f-mono);font-size:12px;color:var(--muted);margin-bottom:2px}
+
+.form{border-top:2px solid var(--line);background:var(--surface-2);padding:22px 24px;display:grid;gap:16px}
+.form h3{font-size:22px}
+.q{display:grid;gap:8px}
+.q > label,.q > .lab{font-weight:700}
+.q .sub{font-weight:400;color:var(--muted);font-size:14px}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.yn button{border:2px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:12px;text-align:left;display:grid;gap:2px}
+.yn b{font-family:var(--f-display);font-size:19px}
+.yn small{color:var(--muted);font-size:14px}
+.yn .y[aria-pressed="true"]{border-color:var(--yes);background:var(--yes-bg)} .yn .y[aria-pressed="true"] b{color:var(--yes)}
+.yn .n[aria-pressed="true"]{border-color:var(--no);background:var(--no-bg)} .yn .n[aria-pressed="true"] b{color:var(--no)}
+.yn button:disabled{cursor:default;opacity:.85}
+@media (max-width:460px){.yn{grid-template-columns:1fr}}
+select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-size:16px}
+.routes{display:grid;gap:8px}
+.route{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px;cursor:pointer;font-size:15px}
+.route input{margin-top:4px;accent-color:var(--signal)}
+.route:has(input:checked){border-color:var(--signal);background:var(--signal-bg)}
+textarea{width:100%;min-height:110px;font:inherit;font-size:16px;line-height:1.5;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);resize:vertical}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.count{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.btn{border:none;border-radius:10px;padding:12px 20px;font-weight:700;background:var(--ink);color:var(--surface)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.sig{background:var(--signal);color:var(--signal-ink)}
+.confirm{background:var(--surface);border:2px solid var(--signal);border-radius:12px;padding:14px;display:grid;gap:10px}
+.confirm .row{justify-content:flex-start}
+
+/* Ruling */
+.ruling{padding:24px;display:grid;gap:18px;border-top:2px solid var(--ink)}
+.verdict{border-radius:12px;padding:18px 20px;display:grid;gap:8px}
+.verdict.y{background:var(--yes-bg)} .verdict.n{background:var(--no-bg)}
+.verdict .tag{font-family:var(--f-mono);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.verdict.y .tag{color:var(--yes)} .verdict.n .tag{color:var(--no)}
+.verdict h3{font-size:clamp(22px,3vw,28px)}
+.verdict p{margin:0;max-width:74ch}
+.checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:700px){.checks{grid-template-columns:1fr}}
+.chk{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 12px;display:grid;gap:2px;font-size:15px}
+.chk .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.chk.ok{border-color:var(--no);background:var(--no-bg)} .chk.bad{border-color:var(--yes);background:var(--yes-bg)}
+.chk b::before{font-family:var(--f-mono);margin-right:6px}
+.chk.ok b::before{content:"✓";color:var(--no)} .chk.bad b::before{content:"✗";color:var(--yes)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:700px){.grid2{grid-template-columns:1fr}}
+.box{border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:8px;align-content:start}
+.box h4{font-size:17px}
+.box p{margin:0}
+.box.code{border-top:5px solid var(--code)}
+.box.why{border-top:5px solid var(--signal)}
+.box.how{border-top:5px solid var(--ink)}
+.box.take{border-top:5px solid var(--no)}
+.std{display:inline-block;font-family:var(--f-mono);font-size:12px;font-weight:700;background:var(--code-bg);color:var(--code);border-radius:6px;padding:2px 8px}
+.cases{display:grid;gap:12px}
+.case{background:var(--slip);color:var(--slip-ink);border:1px dashed var(--slip-edge);border-radius:12px;padding:16px 18px;display:grid;gap:6px}
+.case .eyebrow{color:var(--slip-ink);opacity:.85}
+.case h4{font-size:19px}
+.case p{margin:0;max-width:78ch}
+.case .conseq{font-weight:700}
+.case a{color:inherit;font-weight:600}
+.yours{background:var(--surface-2);border-radius:10px;padding:12px 14px;font-style:italic;white-space:pre-wrap}
+.nav{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+
+/* Lower */
+.lower{margin-top:40px;display:grid;gap:28px}
+.lower h2{font-size:clamp(24px,3vw,32px)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;gap:14px}
+.ladder{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.ladder div{border-radius:10px;padding:10px;font-size:14px;background:var(--surface-2);border:1px solid var(--line);display:grid;gap:4px;align-content:start}
+.ladder b{font-family:var(--f-display);font-size:16px}
+.ladder div:nth-child(n+4){border-color:var(--yes)}
+@media (max-width:900px){.ladder{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:640px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+#export{width:100%;min-height:160px;font-family:var(--f-mono);font-size:13px}
+.refs{display:grid;gap:8px;padding-left:20px;margin:0;font-size:15px}
+.hint{font-size:14px;color:var(--muted);margin:0}
+.foot{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px;margin-top:20px}
+@media (prefers-reduced-motion:no-preference){.ruling{animation:rise .35s ease-out both}@keyframes rise{from{transform:translateY(8px);opacity:.4}to{transform:none;opacity:1}}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <div>
+      <div class="eyebrow">Georgia Code of Ethics for Educators · Rule 505-6-.01</div>
+      <h1>The Reporting <span>Line</span></h1>
+      <p>Every incident here was told to you like it was no big deal. Decide whether it gets reported, which Code of Ethics standard it falls under, and where the report goes. Write why, lock it in, and then see the ruling and real cases where educators faced the consequences.</p>
+    </div>
+    <div class="tally" aria-live="polite">
+      <div><b id="t-done">0</b><small>Ruled</small></div>
+      <div><b id="t-pts">0</b><small>Points</small></div>
+      <div><b id="t-full">0</b><small>All 3 right</small></div>
+    </div>
+  </header>
+
+  <section class="ref" aria-label="Key Georgia timelines">
+    <div><b>24 hours</b>Suspected child abuse goes to DFCS or law enforcement immediately, and never later than 24 hours. You don't investigate first.</div>
+    <div><b>90 days</b>A Code of Ethics breach you personally know about must be reported to the GaPSC as soon as possible, and within 90 days.</div>
+    <div><b>10 days</b>A drug-related conviction must be reported to the GaPSC within 10 days. Felony, moral-turpitude, and drug charges within 90 days.</div>
+  </section>
+
+  <div class="desks" role="tablist" aria-label="Choose your role">
+    <button class="desk-tab" role="tab" id="tab-principal" aria-selected="true" type="button">Principal's desk <small>9 incidents</small></button>
+    <button class="desk-tab" role="tab" id="tab-professor" aria-selected="false" type="button">SOE professor's desk <small>7 incidents</small></button>
+  </div>
+  <p class="desk-intro" id="desk-intro"></p>
+
+  <div class="board">
+    <nav class="stack" id="stack" aria-label="Incidents"></nav>
+    <main id="main"></main>
+  </div>
+
+  <section class="lower">
+    <div class="panel">
+      <h2>What the GaPSC can do</h2>
+      <p class="hint">The sanctions available under the Code, from lightest to heaviest. Suspensions and revocations are also reported to the national NASDTEC Clearinghouse, so they follow an educator to other states.</p>
+      <div class="ladder">
+        <div><b>Warning</b>Tells the educator the conduct was unethical; more will bring harsher action.</div>
+        <div><b>Reprimand</b>A formal admonishment on the record.</div>
+        <div><b>Monitoring</b>Quarterly checks with the educator and employer for a set period.</div>
+        <div><b>Suspension</b>Certificate invalid for a set time. Breach of contract is typically 90 contract days.</div>
+        <div><b>Revocation</b>Permanent. A voluntary surrender counts the same.</div>
+        <div><b>Denial</b>An applicant, including a teacher candidate, is refused certification.</div>
+      </div>
+    </div>
+
+    <div class="panel" id="summary">
+      <h2>Your rulings</h2>
+      <p class="hint" id="sum-hint">Rule on at least one incident to start your record.</p>
+      <div class="tablewrap"><table><thead><tr><th>Incident</th><th>Desk</th><th>Your call</th><th>Ruling</th><th>Score</th></tr></thead><tbody id="sum-body"></tbody></table></div>
+      <div class="row"><strong>Turn it in</strong><div class="row"><button class="btn sig" id="copy" type="button">Copy my responses</button><button class="btn ghost" id="reset" type="button">Start over</button></div></div>
+      <div id="reset-confirm" class="confirm" hidden><p style="margin:0">Clear every ruling on this device?</p><div class="row"><button class="btn" id="reset-yes" type="button">Yes, clear everything</button><button class="btn ghost" id="reset-no" type="button">Keep my work</button></div></div>
+      <label for="export" class="hint">Your responses as text. Copy and paste into your course dropbox or discussion.</label>
+      <textarea id="export" readonly></textarea>
+    </div>
+
+    <div class="panel">
+      <h2>Sources</h2>
+      <ol class="refs">
+        <li>Georgia Professional Standards Commission. <em>The Code of Ethics for Educators</em>, Ga. Comp. R. &amp; Regs. 505-6-.01 (eff. Jan. 1, 2024). <a href="https://www.law.cornell.edu/regulations/georgia/Ga-Comp-R-Regs-R-505-6-.01" target="_blank" rel="noopener">Full text</a></li>
+        <li>GaPSC. <em>Common Missteps and Takeaways: Georgia Code of Ethics for Educators.</em> <a href="https://www.gace.es.pearson.com/static/docs/GT_CommonMissteps.pdf" target="_blank" rel="noopener">PDF</a></li>
+        <li>Ga. Comp. R. &amp; Regs. 505-2-.03, Pre-Service Teaching Certificate. <a href="https://www.law.cornell.edu/regulations/georgia/Ga-Comp-R-Regs-R-505-2-.03" target="_blank" rel="noopener">Full text</a></li>
+        <li>O.C.G.A. § 19-7-5, Georgia's mandated reporter law. <a href="https://oca.georgia.gov/node/35" target="_blank" rel="noopener">Georgia Office of the Child Advocate</a></li>
+        <li>University of Georgia, Programs for Minors: Mandatory reporting of child abuse. <a href="https://programsforminors.uga.edu/node/28" target="_blank" rel="noopener">Policy</a></li>
+        <li>Lewis, M. (2025, Feb. 26). Teacher discipline investigations in Georgia [GPB with The Macon Telegraph]. <a href="https://gpb.org/node/1272141" target="_blank" rel="noopener">GPB</a></li>
+        <li>News reports cited in rulings: <a href="https://www.atlantanewsfirst.com/2026/08/05/former-parkview-high-track-coach-accused-stealing-more-than-25k-booster-club/" target="_blank" rel="noopener">Atlanta News First (Aug. 2026)</a>; <a href="https://www.wsbtv.com/news/local/gwinnett-county/9-educators-including-principal-fired-in-gwinnett-cheating-scandal/953465454/" target="_blank" rel="noopener">WSB-TV (May 2019)</a>; <a href="https://www.edweek.org/teaching-learning/former-atlanta-educators-sentenced-to-prison-for-roles-in-test-cheating-case/2015/04" target="_blank" rel="noopener">Education Week (Apr. 2015)</a>; <a href="https://fox5atlanta.com/news/kennesaw-mountain-high-teacher-arrested-drunk-on-campus" target="_blank" rel="noopener">FOX 5 Atlanta (Apr. 2023)</a>; <a href="https://thepostsearchlight.com/?p=151979" target="_blank" rel="noopener">The Post-Searchlight (July 2013)</a>; <a href="https://www.atlantanewsfirst.com/2024/12/29/teacher-suing-school-board-after-she-was-fired-after-calling-sick-2-days-attend-concert-nashville" target="_blank" rel="noopener">Atlanta News First / Gray (Dec. 2024)</a>; <a href="https://www.wdef.com/?p=61497" target="_blank" rel="noopener">WDEF News 12 (2017)</a>; <a href="https://www.foxla.com/news/assistant-principals-charged-rialto-campus-sex-assaults" target="_blank" rel="noopener">FOX 11 Los Angeles (Feb. 2022)</a>; <a href="https://www.cbsnews.com/baltimore/news/teacher-in-hot-water-for-degrading-social-media-posts-about-students/" target="_blank" rel="noopener">CBS Baltimore (Oct. 2016)</a>.</li>
+      </ol>
+      <p class="foot">Incidents are fictional and written for instruction. Real cases are summarized from published reports; individuals are not named, and charges are noted as charges, not convictions. Rulings model how the Code is commonly applied; always follow your district's and university's procedures and ask the GaPSC Ethics Division when unsure. This is not legal advice. © 2026 Dr. Rebecca Cooper. Licensed CC BY-NC 4.0.</p>
+    </div>
+  </section>
+</div>
+
+<script>
+const STD={0:"Not a Code of Ethics violation",1:"Standard 1 · Legal Compliance",2:"Standard 2 · Conduct with Students",3:"Standard 3 · Alcohol or Drugs",4:"Standard 4 · Honesty",5:"Standard 5 · Public Funds and Property",6:"Standard 6 · Remunerative Conduct",7:"Standard 7 · Confidential Information",8:"Standard 8 · Required Reports",9:"Standard 9 · Professional Conduct",10:"Standard 10 · Testing"};
+const ROUTES={
+ dfcs:"Today: DFCS (1-855-GACHILD) or law enforcement, plus the school administrator, within 24 hours",
+ gapsc:"An ethics report to the GaPSC within 90 days, through or alongside district HR",
+ epp:"The placement school's principal and our university field-experience office, which decide on a GaPSC referral",
+ local:"Handle it locally: a conversation, district or university policy, no ethics report"
+};
+const ROUTE_SHORT={dfcs:"DFCS within 24 hours",gapsc:"GaPSC ethics report",epp:"Placement school + university office",local:"Handle locally"};
+const ROUTE_ORDER={principal:["dfcs","gapsc","local"],professor:["dfcs","epp","gapsc","local"]};
+const GPB={l:"GPB / Macon Telegraph, Feb. 2025",u:"https://gpb.org/node/1272141"};
+const GUIDE={l:"GaPSC, Common Missteps and Takeaways",u:"https://www.gace.es.pearson.com/static/docs/GT_CommonMissteps.pdf"};
+const CODE={l:"GaPSC Code of Ethics, Rule 505-6-.01",u:"https://www.law.cornell.edu/regulations/georgia/Ga-Comp-R-Regs-R-505-6-.01"};
+
+const S=[
+/* ---------- PRINCIPAL ---------- */
+{id:"venmo",desk:"principal",title:"The Venmo shortcut",who:"Varsity soccer coach, 11 years at your school",
+ story:"At a booster meeting you learn the coach collects $40 team fees through his personal Venmo. He uses the money to order warm-ups and pays the bus driver tips. Parents love how easy it is. No receipts were issued.",
+ quote:{w:"Coach, when you ask about it",t:"It all goes to the kids. The bookkeeper's process takes three weeks. I'm saving everybody a headache."},
+ report:true,std:[5],route:["gapsc"],
+ headline:"Report it. This is Standard 5.",
+ why:"Good intentions don't change the rule. The Code requires educators who handle school-related money to account for it, and names co-mingling school funds with personal accounts as unethical. GaPSC guidance lists personal cash apps and collecting money without receipt books among the most common Standard 5 missteps.",
+ how:"Stop the practice today and send it to the district's finance office for an audit. As principal, you also have a duty to report a known Code breach to the GaPSC within 90 days. Most districts file that through HR.",
+ take:"Every dollar collected from students or parents gets a receipt and goes through the school's books. No personal Venmo, Cash App, or PayPal.",
+ cases:[
+  {h:"A Gwinnett coach and $65,000 in booster money",t:"In August 2026, a former Parkview High School track coach in Gwinnett County was charged with felony theft. Police allege he took about $65,000 from the team's booster club between 2018 and 2025 using its debit card and checkbook for personal travel. Parents raised concerns when athletes lacked basic equipment.",c:"Consequence: he resigned in November 2025, was arrested in 2026, and was released on an $11,000 bond. These are charges, not a conviction.",s:[{l:"Atlanta News First, Aug. 2026",u:"https://www.atlantanewsfirst.com/2026/08/05/former-parkview-high-track-coach-accused-stealing-more-than-25k-booster-club/"}]},
+  {h:"What the GaPSC says",t:"Its guidance tells educators to receipt all money, never mix funds, and avoid personal peer-to-peer payment apps.",c:"Consequence: Standard 5 violations can bring any GaPSC sanction, up to revocation.",s:[GUIDE]}
+ ],
+ cues:["venmo","receipt","fund","money","5","co-mingl","commingl"]},
+
+{id:"formula",desk:"principal",title:"Just a little help with the formula sheet",who:"8th grade math teacher, Georgia Milestones week",
+ story:"The day before the math Milestones, a well-liked teacher handed out the official formula sheet as a study guide and let students write notes on it. On test day she collected them and passed the same sheets back. Her team leader mentions it at lunch.",
+ quote:{w:"Team leader",t:"She didn't give them answers. They get that sheet anyway. Honestly, it's kind of a gray area."},
+ report:true,std:[10,7],route:["gapsc"],
+ headline:"Report it. This is Standard 10, Testing.",
+ why:"Letting students use annotated materials during a state test breaches test security and compromises the assessment, which Standard 10 names as unethical. It doesn't matter whether answers were given. Your district testing coordinator must report the irregularity to the Georgia Department of Education, which refers educators to the GaPSC.",
+ how:"Notify the district testing coordinator today; the state's irregularity process starts there. You also owe the GaPSC a report of a known breach. Don't let the teacher 'fix' anything on her own.",
+ take:"Follow the test administration manual exactly. If you make a mistake, report it yourself; hiding it is what turns an error into a career-ending case.",
+ cases:[
+  {h:"This exact case happened in Gwinnett in 2019",t:"A Grace Snell Middle School teacher gave students the Milestones math formula sheet as a study guide before the exam; students took notes on it and used it during the test. The district also found a lack of testing oversight at the school.",c:"Consequence: nine educators, including the principal, left the district during the investigation, 76 students were offered a retest, and the GaPSC opened its own investigation.",s:[{l:"WSB-TV, May 2019",u:"https://www.wsbtv.com/news/local/gwinnett-county/9-educators-including-principal-fired-in-gwinnett-cheating-scandal/953465454/"}]},
+  {h:"The Atlanta Public Schools cheating case",t:"Educators in Atlanta falsified state test results. In 2015, 11 former APS employees were convicted under Georgia's racketeering law.",c:"Consequence: three were sentenced to 20 years with seven to serve in prison; others received shorter prison terms, probation, fines up to $25,000, and community service.",s:[{l:"Education Week, Apr. 2015",u:"https://www.edweek.org/teaching-learning/former-atlanta-educators-sentenced-to-prison-for-roles-in-test-cheating-case/2015/04"}]}
+ ],
+ cues:["test","milestones","security","10","formula","irregular"]},
+
+{id:"flask",desk:"principal",title:"A little something at lunch",who:"High school social studies teacher",
+ story:"Two students tell the front office their teacher 'smells like a bar' after lunch. When you walk by, he seems fine but talks a little loud. A colleague says he keeps a 'soda' in his desk and 'everybody knows.'",
+ quote:{w:"Colleague",t:"He's going through a divorce. He's not hurting anybody. Please don't make it a thing."},
+ report:true,std:[3],route:["gapsc"],
+ headline:"Report it, and act today. This is Standard 3.",
+ why:"Standard 3 bars being on school premises under the influence of, or in possession of, alcohol, and lists signs like slurred speech and personality changes as indicators. Student safety comes first; sympathy for a hard divorce is a reason to offer the employee assistance program, not to look away.",
+ how:"Remove him from students now and follow your district's reasonable-suspicion procedure with HR and school police. Then report the breach to the GaPSC within 90 days.",
+ take:"No alcohol in your car, desk, or bag on campus, and none before any school activity. Gifting a bottle of wine to a coworker on campus is on the GaPSC's list of common missteps.",
+ cases:[
+  {h:"A Cobb County teacher, a soda bottle, and a breath test",t:"In April 2023, a Kennesaw Mountain High School teacher was arrested at school. Police said he had whiskey in a soda bottle in his classroom, was seen throwing away an empty liquor bottle behind the school, and blew more than twice the legal limit.",c:"Consequence: charged with alcohol possession on school grounds, booked into the county jail, and described by the district as a former staff member.",s:[{l:"FOX 5 Atlanta, Apr. 2023",u:"https://fox5atlanta.com/news/kennesaw-mountain-high-teacher-arrested-drunk-on-campus"}]}
+ ],
+ cues:["alcohol","drunk","3","influence","smell","safety"]},
+
+{id:"beach",desk:"principal",title:"Three sick days and a beach wedding",who:"7th grade ELA teacher",
+ story:"A teacher calls in sick Wednesday through Friday. On Saturday a parent forwards you her public Instagram: she's a bridesmaid at her sister's beach wedding, with photos from Wednesday's rehearsal lunch. Her plans for the sub were great.",
+ quote:{w:"The teacher, when you ask",t:"I was exhausted and needed the time. Everybody does a mental-health day. I left perfect sub plans."},
+ report:true,std:[4],route:["gapsc"],
+ headline:"Report it. This is Standard 4, Honesty.",
+ why:"Standard 4 lists falsifying or misrepresenting the reasons for absences or leave as unethical conduct. The problem isn't taking time off; it's claiming sick leave for a planned trip. The GaPSC names 'using sick leave while on vacation' as a common honesty misstep.",
+ how:"Document what you know, meet with HR, and correct the leave record. Report the breach to the GaPSC within 90 days. Your district may also discipline locally.",
+ take:"Use personal leave for personal plans. If leave is denied, that's a conversation with your principal, not a sick call.",
+ cases:[
+  {h:"A teacher fired over two sick days and a concert",t:"In Ohio's Lakota Local School District, a high school English teacher was accused of falsifying sick leave to attend a concert in Nashville in 2024. She says she had a doctor's note; the district says she wouldn't answer questions about her whereabouts.",c:"Consequence: she was placed on unpaid leave and terminated in October 2024, and is suing the school board. This is an Ohio case and the facts are disputed.",s:[{l:"Atlanta News First / Gray Media, Dec. 2024",u:"https://www.atlantanewsfirst.com/2024/12/29/teacher-suing-school-board-after-she-was-fired-after-calling-sick-2-days-attend-concert-nashville"}]},
+  {h:"Honesty cases are common in Georgia",t:"A newspaper review of more than 5,000 alleged Georgia educator violations from 2019 to 2024 found honesty among the top four reasons for GaPSC sanctions.",c:"Consequence: honesty sanctions range from reprimands to multi-year suspensions.",s:[GPB]}
+ ],
+ cues:["sick","leave","honest","4","lie","falsif","absence"]},
+
+{id:"iep",desk:"principal",title:"The IEP meeting that basically happened",who:"Special education case manager",
+ story:"An IEP annual review was due Friday. The parent never answered three calls. The case manager held the meeting with the team, marked the parent as 'participated by phone,' and dated it a week earlier so it would be in compliance. Your assistant principal found it during an audit.",
+ quote:{w:"Case manager",t:"The plan is good for the kid. I just didn't want us out of compliance over a paperwork technicality."},
+ report:true,std:[4],route:["gapsc"],
+ headline:"Report it. This is Standard 4, Honesty.",
+ why:"Standard 4 covers falsifying information submitted to government agencies and information in the course of professional practice. GaPSC guidance specifically names documenting IEP meetings that never occurred, forging signatures, and backdating meetings. An out-of-compliance IEP is fixable; a falsified one is an ethics case and a federal compliance problem.",
+ how:"Correct the record, document the real contact attempts, and reschedule with the parent. Report the breach to the GaPSC within 90 days and loop in your special education director.",
+ take:"When a deadline is about to be missed, document honestly and ask for help. Never sign, date, or record attendance that didn't happen.",
+ cases:[
+  {h:"Decatur County: misdated paperwork, real sanctions",t:"In 2013 the GaPSC acted on two Decatur County administrators. A former principal had altered student attendance data so the school would meet a federal accountability target. An assistant principal had misdated several teacher evaluations.",c:"Consequence: the principal received a two-year certificate suspension; the assistant principal received a reprimand, for misdating alone.",s:[{l:"The Post-Searchlight, July 2013",u:"https://thepostsearchlight.com/?p=151979"}]},
+  {h:"What the GaPSC lists",t:"Its guidance names falsified IEP documents, including meetings that never occurred, forged signatures, and backdated meetings, as common honesty missteps.",c:"Consequence: Standard 4 sanctions run from warnings to revocation.",s:[GUIDE]}
+ ],
+ cues:["iep","backdat","forg","4","honest","falsif","document"]},
+
+{id:"gift",desk:"principal",title:"A $25 coffee card at winter break",who:"2nd year chemistry teacher",
+ story:"Before winter break, a parent hands a teacher a holiday card with a $25 coffee gift card inside and a note thanking her for helping their son through a rough semester. The teacher asks you if she has to give it back.",
+ quote:{w:"The teacher",t:"I don't want to get in trouble. Is this a bribe? Do I need to report myself?"},
+ report:false,std:[0],route:["local"],
+ headline:"Don't report it. This isn't a Code violation.",
+ why:"Standard 6 targets accepting gifts from vendors or potential vendors where there may be a conflict of interest, soliciting families to buy from the educator, and paid tutoring or coaching of your own students without approval. A modest thank-you gift from a parent isn't on that list. It would be different if it were large, came with a request, or arrived before a grade decision.",
+ how:"Check your district's gift policy; many set a dollar limit. If she's under it, she can say thank you.",
+ take:"Ask yourself whether the gift could look like it buys something: a grade, a placement, a contract. If it could, decline it and tell your principal.",
+ cases:[
+  {h:"What Standard 6 actually covers",t:"The Code's examples are vendor gifts with an appearance of conflict, soliciting students or parents to buy from you, paid tutoring of your assigned students, and paid camps or leagues involving your system's students, each without approval.",c:"Consequence: none here. Over-reporting has a cost too: it wastes an investigator's time and frightens a teacher who did nothing wrong.",s:[CODE]}
+ ],
+ cues:["gift","not a violation","no violation","policy","vendor","6"]},
+
+{id:"tutor",desk:"principal",title:"A little summer side hustle",who:"Algebra I teacher",
+ story:"A parent mentions how much her daughter loves her private tutoring with the algebra teacher, $60 an hour, twice a week, at the library. The daughter is in that teacher's class right now. The teacher never asked anyone about it.",
+ quote:{w:"The teacher",t:"It's after school and off campus. What I do on my own time is my business. The kid's grade is going up."},
+ report:true,std:[6],route:["gapsc"],
+ headline:"Report it. This is Standard 6.",
+ why:"Standard 6 names tutoring students assigned to the educator for pay, unless approved by the local board or its designee, as unethical. The conflict is obvious: the person grading the student is being paid by the family. It doesn't matter that it's off campus.",
+ how:"Stop the arrangement until it's approved or reassigned, and talk with HR. The Code requires reporting a known breach to the GaPSC within 90 days; many districts handle that report through HR.",
+ take:"Paid tutoring of students from other teachers' classes is usually fine with approval. Your own students: get permission first, in writing, or don't.",
+ cases:[
+  {h:"Straight from the GaPSC's list",t:"Its guidance names providing paid coaching or tutoring to students without first getting permission, and doing personal business for profit during school hours, as common Standard 6 missteps.",c:"Consequence: Standard 6 cases can bring any GaPSC sanction, from a warning to suspension.",s:[GUIDE,CODE]}
+ ],
+ cues:["tutor","paid","6","approval","permission","conflict"]},
+
+{id:"breach",desk:"principal",title:"The July 20 email",who:"Physics teacher, signed a contract in April",
+ story:"On July 20, a physics teacher emails that she's taken a job at an engineering firm and won't be back. School starts August 4. She's sorry, but the salary is double, and she doesn't think it's a big deal since teachers leave all the time.",
+ quote:{w:"Her email",t:"I'm sure you'll find someone. It's just a contract."},
+ report:true,std:[9],route:["gapsc"],
+ headline:"Report it. This is Standard 9, breach of contract.",
+ why:"Standard 9 names a resignation that equals a breach of contract as unethical. The GaPSC won't sanction a breach for the coming year if it happens on or before June 1. After June 1, the educator must show an approved reason: a spouse's transfer with an unreasonable commute, documented illness of the educator or immediate family, or a promotion in education. A higher-paying job outside education isn't one of them.",
+ how:"Your superintendent or HR files breach-of-contract reports with the GaPSC. Document the dates and the contract.",
+ take:"If you're going to leave, tell your district by June 1.",
+ cases:[
+  {h:"The typical penalty",t:"GaPSC guidance states that breach of contract typically results in a 90-contract-day suspension of the educator's certificate.",c:"Consequence: a suspended certificate means she can't work as an educator anywhere in Georgia for that time, and the sanction is reported nationally.",s:[GUIDE]},
+  {h:"How common this is",t:"Standard 9 cases, which include breached contracts, make up about 30% of Georgia's ethics cases each year.",c:"",s:[GPB]}
+ ],
+ cues:["contract","breach","june","9","resign","professional conduct"]},
+
+{id:"snap",desk:"principal",title:"Snapchat streaks for engagement",who:"First-year 9th grade health teacher",
+ story:"A new teacher proudly tells your leadership team she has Snapchat 'streaks' going with about 15 students. She says they answer her faster there than on the school platform, and she's caught two kids vaping because they messaged her.",
+ quote:{w:"The teacher",t:"It's where they are. I never send anything weird. This is how you build relationships with Gen Z."},
+ report:true,std:[2,9],route:["gapsc"],
+ headline:"Report it. This is Standard 2.",
+ why:"Standard 2 requires a professional relationship with every student, in and outside the classroom, and names inappropriate electronic relationships as unethical. Private, disappearing messages with students are the pattern districts and the GaPSC warn about most, because they hide what's said. GaPSC guidance: be friendly, but not a friend, and avoid direct electronic contact.",
+ how:"Have her end the private contact today and move all communication to the district platform. Work with HR, and report to the GaPSC within 90 days.",
+ take:"Communicate with students only on district-approved, visible platforms. If a student messages you privately, answer on the school platform and loop in a parent or counselor when it's serious.",
+ cases:[
+  {h:"A Snapchat conversation and a missed report",t:"In 2017, a Columbia County, Georgia, middle school teacher was arrested after a mother found Snapchat messages between him and her 14-year-old daughter. In one, the girl wrote that she had been sexually abused in the past.",c:"Consequence: he was charged with failure to report suspected child abuse. Private messaging put both the student and the teacher at risk.",s:[{l:"WDEF News 12, 2017",u:"https://www.wdef.com/?p=61497"}]},
+  {h:"What Georgia's data shows",t:"Georgia opened more than 1,850 educator ethics cases in fiscal 2024, the most in a decade. Conduct with students is a top-four reason for sanctions, and the GaPSC's examples include private social media messages with students.",c:"Consequence: from 2019 to 2024, at least 1,830 Georgia certificates were suspended, revoked, or surrendered.",s:[GPB]}
+ ],
+ cues:["snapchat","social","electronic","2","boundar","private","message"]},
+
+/* ---------- PROFESSOR ---------- */
+{id:"disclose",desk:"professor",title:"She said her mentor would handle it",who:"Your student teacher, placed in a 6th grade class",
+ story:"During Thursday seminar, your candidate mentions that last Monday a student told her that her mom's boyfriend 'hits her when he's drunk' and showed a bruise. The candidate told her mentor teacher, who said she'd take care of it. The candidate never heard anything else.",
+ quote:{w:"Your candidate",t:"I didn't want to overstep. I'm just a student teacher. My mentor knows the family."},
+ report:true,std:[8],route:["dfcs"],
+ headline:"Report it today. This is Standard 8 and Georgia's mandated reporter law.",
+ why:"Georgia law requires a report immediately and never later than 24 hours once there's reasonable cause to suspect abuse. Telling a mentor doesn't guarantee a report was made, and three days have passed. Your candidate holds a Pre-Service certificate and is accountable under the Code; Standard 8 requires reporting child abuse.",
+ how:"Today: confirm with the school administrator whether DFCS was called. If you can't confirm it, call DFCS (1-855-GACHILD) yourself. Georgia gives good-faith reporters immunity. Then notify your field-experience office and coach the candidate on what to do next time.",
+ take:"Never assume someone else reported. Report or confirm the report within 24 hours. Don't investigate first.",
+ cases:[
+  {h:"A Georgia teacher charged for not reporting",t:"In 2017, a Columbia County middle school teacher received Snapchat messages in which a 14-year-old said she had been sexually abused in the past.",c:"Consequence: he was arrested and charged with failure to report suspected child abuse.",s:[{l:"WDEF News 12, 2017",u:"https://www.wdef.com/?p=61497"}]},
+  {h:"When school staff wait",t:"In 2022, two California assistant principals were charged with felony child abuse and misdemeanor failure to report. Prosecutors said reports from two girls never reached police and a third girl was assaulted afterward.",c:"Consequence: criminal charges for both administrators. These are charges, not convictions.",s:[{l:"FOX 11 Los Angeles, Feb. 2022",u:"https://www.foxla.com/news/assistant-principals-charged-rialto-campus-sex-assaults"}]},
+  {h:"What a Georgia university requires",t:"UGA's policy tells students at field placements to notify the host school's administrator immediately and then their university supervisor, and requires reports within 24 hours.",c:"Georgia grants civil and criminal immunity for good-faith reports.",s:[{l:"University of Georgia, mandatory reporting policy",u:"https://programsforminors.uga.edu/node/28"}]}
+ ],
+ cues:["dfcs","24","report","abuse","8","today","mandat"]},
+
+{id:"iepphoto",desk:"professor",title:"It's just for my case study",who:"MAT candidate in a co-taught 8th grade class",
+ story:"For your special education course, a candidate snapped phone photos of a student's IEP accommodations page and posted them to the class group chat so classmates could 'see a real one.' The student's name and disability category are visible.",
+ quote:{w:"Your candidate",t:"It's only our cohort. We're all future teachers. I'll delete it after the assignment."},
+ report:true,std:[7],route:["epp","gapsc"],
+ headline:"Report it. This is Standard 7, Confidential Information.",
+ why:"Standard 7 names sharing confidential information about students' records, including health and disability information, as unethical. 'Only my cohort' is still people with no right to see that record. GaPSC guidance lists sharing confidential information on social media and using personal devices or email for education records as common missteps.",
+ how:"Have it deleted from the chat and every phone now. Notify the placement principal, who has to treat it as a records breach, and your field-experience office, which decides on a GaPSC referral for a Pre-Service certificate holder.",
+ take:"Use de-identified or sample IEPs for coursework. Student records never go on a personal phone.",
+ cases:[
+  {h:"A private account is not private",t:"In 2016, a Baltimore County, Maryland, elementary teacher's private Instagram posts about her students were screenshotted and spread online.",c:"Consequence: public outcry and district discipline.",s:[{l:"CBS Baltimore, Oct. 2016",u:"https://www.cbsnews.com/baltimore/news/teacher-in-hot-water-for-degrading-social-media-posts-about-students/"}]},
+  {h:"What the GaPSC lists",t:"Its guidance names sharing confidential information on social media, discussing it where others can overhear, and using personal email for student records as common Standard 7 missteps.",c:"",s:[GUIDE]}
+ ],
+ cues:["confiden","iep","7","record","privacy","ferpa","photo"]},
+
+{id:"tailgate",desk:"professor",title:"Two beers at the Friday game",who:"Undergraduate candidate, student teaching at a high school",
+ story:"Your candidate posts a story from the placement school's homecoming game. In the parking lot, she and two young teachers are drinking beers from a cooler. Students are walking by in the background. It's after school hours.",
+ quote:{w:"Your candidate",t:"It was after hours, I'm 23, and I wasn't working the game. The other teachers were doing it too."},
+ report:true,std:[3],route:["epp","gapsc"],
+ headline:"Report it. This is Standard 3.",
+ why:"Standard 3 bars possessing or consuming alcohol at a school-related activity involving students, whether or not you're on duty. A homecoming game is a school-related activity. Being of legal age doesn't matter, and neither does what the other teachers did.",
+ how:"Notify your field-experience office and the placement principal, who will address the two teachers too. The office decides on a GaPSC referral. Coach the candidate on the rule and her social media.",
+ take:"No alcohol at any school event: games, field trips, dances, fundraisers. Also nothing before arriving at one.",
+ cases:[
+  {h:"What the GaPSC lists",t:"Its guidance names drinking before or at any school event, on field trips, and on campus, and gifting wine to coworkers on school premises, as common Standard 3 missteps.",c:"Consequence: Standard 3 violations can lead to suspension or revocation.",s:[GUIDE]},
+  {h:"How it ends when it escalates",t:"In 2023, a Cobb County high school teacher was arrested at school with whiskey in a soda bottle and blew more than twice the legal limit.",c:"Consequence: criminal charge and loss of his job.",s:[{l:"FOX 5 Atlanta, Apr. 2023",u:"https://fox5atlanta.com/news/kennesaw-mountain-high-teacher-arrested-drunk-on-campus"}]}
+ ],
+ cues:["alcohol","beer","3","school event","activity","game"]},
+
+{id:"copied",desk:"professor",title:"The lesson plan looked familiar",who:"MAT candidate in your methods course",
+ story:"A candidate's lesson plan for your course is about 80% copied from a teacher-resource website, including the objectives and assessment. It wasn't taught at the placement and wasn't submitted to the school.",
+ quote:{w:"Your candidate",t:"Everybody pulls from the internet. Isn't that what real teachers do?"},
+ report:false,std:[0],route:["local"],
+ headline:"Don't send it to the GaPSC. Handle it through your university.",
+ why:"Plagiarizing a course assignment is an academic integrity violation, not a Code of Ethics breach. It wasn't submitted to a school, a district, or the state. Your university's academic integrity process and your program's disposition review are the right tools.",
+ how:"Follow your university's academic integrity policy and document it. Treat it as a disposition concern (CDPA Items 1 and 11) with a clear expectation for next time.",
+ take:"The line moves if the dishonesty reaches professional practice. Submitting a copied plan as your own to the placement school, or faking field hours, falls under Standard 4.",
+ cases:[
+  {h:"Where the Code draws the line",t:"Standard 4 covers falsifying information submitted to schools, districts, and government agencies, and in the course of professional practice. A course assignment is neither.",c:"Consequence: university sanctions under academic integrity policy, not GaPSC action.",s:[CODE]}
+ ],
+ cues:["academic","integrity","university","plagiar","not a code","local","0"]},
+
+{id:"hours",desk:"professor",title:"She said she'd sign anyway",who:"Undergraduate candidate, early field experience",
+ story:"Your candidate's field-hours log shows the mentor teacher's signature on four days the school's sign-in sheet shows she wasn't there. The hours count toward program completion.",
+ quote:{w:"Your candidate",t:"My mentor said it was fine. She knows I'd have been there if I didn't have a work shift. It's just paperwork."},
+ report:true,std:[4],route:["epp","gapsc"],
+ headline:"Report it. This is Standard 4, Honesty.",
+ why:"Falsifying records of professional experience is misrepresenting information submitted in the course of professional practice and toward certification. The mentor's agreement doesn't make it honest; it adds a second educator to the problem.",
+ how:"Notify your field-experience office, which handles the candidate's program standing and decides on a GaPSC referral. The placement principal needs to know about the mentor's signature.",
+ take:"Log only what happened. If you can't make your hours, tell your supervisor and make a plan.",
+ cases:[
+  {h:"Decatur County: misdated paperwork",t:"In 2013 the GaPSC reprimanded a Georgia assistant principal for misdating teacher evaluations, and suspended a principal's certificate for two years for altering attendance data.",c:"Consequence: a reprimand for misdating alone; a two-year suspension for falsified data.",s:[{l:"The Post-Searchlight, July 2013",u:"https://thepostsearchlight.com/?p=151979"}]},
+  {h:"Honesty is a top-four sanction reason in Georgia",t:"A review of more than 5,000 alleged violations from 2019 to 2024 found that about 75% of Standard 4 cases involved dishonest applications.",c:"",s:[GPB]}
+ ],
+ cues:["hours","log","sign","4","honest","falsif","forg"]},
+
+{id:"charge",desk:"professor",title:"It's pending, so it doesn't count",who:"MAT candidate, starting student teaching in January",
+ story:"In an advising meeting, your candidate mentions she was charged over winter break with misdemeanor marijuana possession. Her court date is in March. She asks whether she needs to tell anyone, since she hasn't been convicted.",
+ quote:{w:"Your candidate",t:"My lawyer says it'll probably get dropped. Why would I put that on any form?"},
+ report:true,std:[1,8],route:["epp","gapsc"],
+ headline:"It has to be reported. This is Standards 1 and 8.",
+ why:"GaPSC guidance says drug-related charges must be reported to the GaPSC within 90 days, and a drug-related conviction within 10 days. The Code counts first-offender treatment and similar dispositions as convictions. Candidates hold a Pre-Service certificate that requires a criminal background check, and the GaPSC says to disclose every conviction on its Personal Affirmation Questions, however minor.",
+ how:"Tell her clearly that she must self-report, and connect her with your field-experience office today. Don't promise confidentiality.",
+ take:"A charge that's disclosed is usually survivable. A charge that's hidden turns into an honesty case.",
+ cases:[
+  {h:"What gets Georgia educators sanctioned",t:"Georgia's Standard 1 cases include not reporting drug convictions within 10 days and not disclosing minor charges on application questions.",c:"Consequence: the GaPSC states that failing to report a drug conviction can lead to revocation, and failing to answer its requests for information results in revocation.",s:[GPB,GUIDE]},
+  {h:"The Pre-Service certificate",t:"Georgia requires a Pre-Service certificate, including a background check, for everyone in field experiences or student teaching, and holds holders accountable under the Code.",c:"Consequence: the certificate is invalidated if the candidate is removed from the program.",s:[{l:"GaPSC Rule 505-2-.03",u:"https://www.law.cornell.edu/regulations/georgia/Ga-Comp-R-Regs-R-505-2-.03"}]}
+ ],
+ cues:["charge","disclos","self-report","90","10 days","1","8","legal"]},
+
+{id:"vent",desk:"professor",title:"Venting on her private story",who:"Undergraduate candidate, middle school placement",
+ story:"A classmate shows you a candidate's private Instagram story: 'This school is a MESS. Admin is clueless and I'm doing my mentor's job for free 🙃.' No students, names, photos, or school name appear.",
+ quote:{w:"Your candidate",t:"It's my private story with like 60 friends. I didn't name anyone. I'm allowed to have feelings."},
+ report:false,std:[0],route:["local"],
+ headline:"Don't report it. Address it as a disposition concern.",
+ why:"No student is identified, nothing confidential is shared, and no Code standard is breached. But it's a real professional-dispositions problem: CDPA Items 3 (Attitude), 16 (Use of Technology), and 23 (Commitment to School) all apply, and 'private' posts get screenshotted.",
+ how:"Have a coaching conversation and document it under your program's disposition process. Talk about who can see a story, and where to take frustration: you, her seminar, her university supervisor.",
+ take:"The line moves the moment a post identifies or disrespects students, shares anything confidential, or happens on school time or devices. Then it's a Code issue under Standards 2, 7, or 9.",
+ cases:[
+  {h:"Screenshots travel",t:"In 2016, a Maryland teacher's posts on a private Instagram account were screenshotted and shared publicly. Those posts disparaged students, which is why they became a discipline case.",c:"Consequence: public outcry and district discipline.",s:[{l:"CBS Baltimore, Oct. 2016",u:"https://www.cbsnews.com/baltimore/news/teacher-in-hot-water-for-degrading-social-media-posts-about-students/"}]},
+  {h:"What the GaPSC advises",t:"Its Standard 9 guidance tells educators to monitor who follows them, whom they follow, and the comments on their pages.",c:"",s:[GUIDE]}
+ ],
+ cues:["disposition","not a code","no violation","private","coach","local","cdpa"]}
+];
+
+const KEY="reporting-line-v1";
+let st={desk:"principal",cur:{principal:0,professor:0},d:{}};
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null"); if(s&&s.d) st=Object.assign(st,s);}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st));}catch(e){}};
+try{const h=(location.hash||"").slice(1); if(h==="professor"||h==="principal") st.desk=h;}catch(e){}
+const $=q=>document.querySelector(q);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const MIN=40;
+const list=()=>S.filter(s=>s.desk===st.desk);
+const INTRO={
+ principal:"You lead a Georgia middle and high school campus. Teachers, coaches, and parents bring these to you casually. As a GaPSC-certified administrator, you have your own duty to report Code breaches you know about.",
+ professor:"You teach and supervise candidates in a School of Education. Your candidates hold Georgia Pre-Service certificates and are accountable under the Code. These come up in seminar, advising, and your inbox."
+};
+
+function score(s,d){
+  const a=(d.report===s.report)?1:0;
+  const b=s.std.includes(Number(d.std))?1:0;
+  const c=s.route.includes(d.route)?1:0;
+  return {a,b,c,t:a+b+c};
+}
+
+function stack(){
+  const n=$("#stack"); n.innerHTML="";
+  list().forEach((s,i)=>{
+    const d=st.d[s.id]; let pill='<span class="pill open">Open</span>';
+    if(d&&d.locked){const sc=score(s,d).t; pill=sc===3?'<span class="pill full">3/3</span>':sc>0?`<span class="pill part">${sc}/3</span>`:'<span class="pill miss">0/3</span>';}
+    const b=document.createElement("button"); b.type="button"; b.className="item"; b.setAttribute("aria-current",i===st.cur[st.desk]?"true":"false");
+    b.innerHTML=`<span class="no">${String(i+1).padStart(2,"0")}</span><span class="nm">${esc(s.title)}</span>${pill}`;
+    b.onclick=()=>{st.cur[st.desk]=i;save();render();$("#main").scrollIntoView({block:"start",behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});};
+    n.appendChild(b);
+  });
+}
+
+function render(){
+  $("#tab-principal").setAttribute("aria-selected",st.desk==="principal");
+  $("#tab-professor").setAttribute("aria-selected",st.desk==="professor");
+  $("#desk-intro").textContent=INTRO[st.desk];
+  stack(); tally(); summary();
+  const L=list(); const i=st.cur[st.desk]; const s=L[i];
+  const d=st.d[s.id]||{report:null,std:"",route:"",why:"",locked:false};
+  const dis=d.locked?"disabled":"";
+  const stdOpts=['<option value="">Choose a standard…</option>'].concat(Object.keys(STD).map(k=>`<option value="${k}" ${String(d.std)===k?"selected":""}>${STD[k]}</option>`)).join("");
+  const routeOpts=ROUTE_ORDER[s.desk].map(r=>`<label class="route"><input type="radio" name="route" value="${r}" ${d.route===r?"checked":""} ${dis}><span>${ROUTES[r]}</span></label>`).join("");
+  $("#main").innerHTML=`
+  <article class="slip" aria-labelledby="inc-title">
+    <div class="slip-head">
+      <div class="eyebrow" style="color:inherit;opacity:.8">${s.desk==="principal"?"Principal's desk":"SOE professor's desk"} · Incident ${String(i+1).padStart(2,"0")} of ${L.length}</div>
+      <h2 id="inc-title">${esc(s.title)}</h2>
+      <div class="meta"><strong>Who:</strong> ${esc(s.who)}</div>
+    </div>
+    <div class="slip-body">
+      <p>${esc(s.story)}</p>
+      <p class="quote"><span class="who">${esc(s.quote.w)}</span>"${esc(s.quote.t)}"</p>
+    </div>
+    <div class="form">
+      <h3>Your ruling</h3>
+      <div class="q"><span class="lab">1. Does this need to be reported?</span>
+        <div class="yn" role="group" aria-label="Report decision">
+          <button type="button" class="y" id="r-yes" aria-pressed="${d.report===true}" ${dis}><b>Yes, report it</b><small>It goes beyond a conversation</small></button>
+          <button type="button" class="n" id="r-no" aria-pressed="${d.report===false}" ${dis}><b>No, don't report</b><small>It's not a Code issue</small></button>
+        </div></div>
+      <div class="q"><label for="std">2. What type is it? <span class="sub">Pick the Georgia Code of Ethics standard, or "Not a violation."</span></label>
+        <select id="std" ${dis}>${stdOpts}</select></div>
+      <div class="q"><span class="lab">3. Where does it go?</span><div class="routes" role="radiogroup" aria-label="Where it goes">${routeOpts}</div></div>
+      <div class="q"><label for="why">4. Why? <span class="sub">Explain in your own words. Name the standard and what made it reportable or not.</span></label>
+        <textarea id="why" ${dis} placeholder="Example: This is Standard 5. Even if the money went to the kids, he used a personal app with no receipts, which mixes school funds with his own account.">${esc(d.why)}</textarea></div>
+      <div class="row"><span class="count" id="count"></span>${d.locked?`<span class="pill ${score(s,d).t===3?"full":score(s,d).t?"part":"miss"}">Locked · ${score(s,d).t}/3</span>`:'<button type="button" class="btn" id="lock">Lock in my ruling</button>'}</div>
+      <div id="confirm" class="confirm" hidden><p style="margin:0"><strong>Lock it in?</strong> You can't change your answers after this.</p><div class="row"><button type="button" class="btn" id="yes">Yes, lock it in</button><button type="button" class="btn ghost" id="no">Keep editing</button></div></div>
+    </div>
+    <div id="ruling"></div>
+  </article>`;
+  const ready=()=>d.report!==null&&d.std!==""&&d.route&&(d.why||"").trim().length>=MIN;
+  const upd=()=>{if(d.locked){$("#count").textContent="";return;} const n=(d.why||"").trim().length; const miss=[]; if(d.report===null)miss.push("yes/no"); if(d.std==="")miss.push("standard"); if(!d.route)miss.push("route"); if(n<MIN)miss.push(`${MIN-n} more characters`); $("#count").textContent=miss.length?"Still needed: "+miss.join(", "):"Ready to lock in"; $("#lock").disabled=!ready();};
+  const keep=()=>{st.d[s.id]=d;save();upd();};
+  if(!d.locked){
+    $("#r-yes").onclick=()=>{d.report=true;$("#r-yes").setAttribute("aria-pressed","true");$("#r-no").setAttribute("aria-pressed","false");keep();};
+    $("#r-no").onclick=()=>{d.report=false;$("#r-no").setAttribute("aria-pressed","true");$("#r-yes").setAttribute("aria-pressed","false");keep();};
+    $("#std").onchange=e=>{d.std=e.target.value;keep();};
+    document.querySelectorAll('input[name="route"]').forEach(r=>r.onchange=e=>{d.route=e.target.value;keep();});
+    $("#why").oninput=e=>{d.why=e.target.value;keep();};
+    $("#lock").onclick=()=>{$("#confirm").hidden=false;$("#yes").focus();};
+    $("#no").onclick=()=>{$("#confirm").hidden=true;};
+    $("#yes").onclick=()=>{d.locked=true;d.why=d.why.trim();st.d[s.id]=d;save();render();const r=$("#ruling");if(r)r.scrollIntoView({block:"start",behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});};
+  }
+  upd();
+  if(d.locked){$("#ruling").innerHTML=ruling(s,d);
+    const nx=$("#next"),pv=$("#prev");
+    if(nx) nx.onclick=()=>{st.cur[st.desk]=Math.min(L.length-1,i+1);save();render();$("#main").scrollIntoView({block:"start"});};
+    if(pv) pv.onclick=()=>{st.cur[st.desk]=Math.max(0,i-1);save();render();$("#main").scrollIntoView({block:"start"});};
+    const sw=$("#switch"); if(sw) sw.onclick=()=>{st.desk=st.desk==="principal"?"professor":"principal";save();render();$("#main").scrollIntoView({block:"start"});};
+  }
+}
+
+function ruling(s,d){
+  const sc=score(s,d);
+  const stdTxt=s.std.map(n=>`<span class="std">${STD[n]}</span>`).join(" ");
+  const L=list(), i=st.cur[st.desk];
+  const nextBtn=i<L.length-1?'<button type="button" class="btn sig" id="next">Next incident</button>':`<button type="button" class="btn sig" id="switch">Go to the ${st.desk==="principal"?"SOE professor's":"principal's"} desk</button>`;
+  return `<section class="ruling" aria-label="Ruling">
+    <div class="verdict ${s.report?"y":"n"}"><span class="tag">The ruling · you scored ${sc.t} of 3</span><h3>${esc(s.headline)}</h3><p>${esc(s.why)}</p></div>
+    <div class="checks">
+      <div class="chk ${sc.a?"ok":"bad"}"><span class="k">Report?</span><b>${d.report?"You said yes":"You said no"}</b><span>Answer: ${s.report?"Yes":"No"}</span></div>
+      <div class="chk ${sc.b?"ok":"bad"}"><span class="k">Type</span><b>${esc(STD[d.std])}</b><span>Answer: ${s.std.map(n=>STD[n]).join(" or ")}</span></div>
+      <div class="chk ${sc.c?"ok":"bad"}"><span class="k">Where it goes</span><b>${esc(ROUTE_SHORT[d.route])}</b><span>Answer: ${s.route.map(r=>ROUTE_SHORT[r]).join(" or ")}</span></div>
+    </div>
+    <div><div class="eyebrow" style="margin-bottom:6px">Your locked reasoning</div><div class="yours">${esc(d.why)}</div></div>
+    <div class="grid2">
+      <div class="box code"><h4>The standard</h4><p>${stdTxt}</p></div>
+      <div class="box how"><h4>Who reports, and when</h4><p>${esc(s.how)}</p></div>
+      <div class="box take" style="grid-column:1/-1"><h4>Takeaway for your own practice</h4><p>${esc(s.take)}</p></div>
+    </div>
+    <div class="cases"><div class="eyebrow">Real cases and consequences</div>
+      ${s.cases.map(c=>`<div class="case"><h4>${esc(c.h)}</h4><p>${esc(c.t)}</p>${c.c?`<p class="conseq">${esc(c.c)}</p>`:""}<p class="hint" style="color:inherit;opacity:.9">Source: ${c.s.map(x=>`<a href="${x.u}" target="_blank" rel="noopener">${esc(x.l)}</a>`).join(" · ")}</p></div>`).join("")}
+    </div>
+    <div class="nav">${i>0?'<button type="button" class="btn ghost" id="prev">Previous incident</button>':"<span></span>"}${nextBtn}</div>
+  </section>`;
+}
+
+function tally(){
+  const done=S.filter(s=>st.d[s.id]&&st.d[s.id].locked);
+  $("#t-done").textContent=`${done.length}/${S.length}`;
+  $("#t-pts").textContent=`${done.reduce((a,s)=>a+score(s,st.d[s.id]).t,0)}/${done.length*3}`;
+  $("#t-full").textContent=done.filter(s=>score(s,st.d[s.id]).t===3).length;
+}
+function summary(){
+  const done=S.filter(s=>st.d[s.id]&&st.d[s.id].locked);
+  const pts=done.reduce((a,s)=>a+score(s,st.d[s.id]).t,0);
+  $("#sum-hint").textContent=done.length?`${done.length} of ${S.length} ruled · ${pts} of ${done.length*3} points.`:"Rule on at least one incident to start your record.";
+  $("#sum-body").innerHTML=done.map(s=>{const d=st.d[s.id];const sc=score(s,d).t;return `<tr><td><strong>${esc(s.title)}</strong></td><td>${s.desk==="principal"?"Principal":"Professor"}</td><td>${d.report?"Report":"Don't report"} · ${esc(STD[d.std])}</td><td>${s.report?"Report":"Don't report"} · ${s.std.map(n=>STD[n]).join(" / ")}</td><td><span class="pill ${sc===3?"full":sc?"part":"miss"}">${sc}/3</span></td></tr>`}).join("")||'<tr><td colspan="5" class="hint">Nothing locked in yet.</td></tr>';
+  $("#export").value=done.length?["THE REPORTING LINE — My rulings","",...done.map((s,i)=>{const d=st.d[s.id];return `${i+1}. ${s.title} (${s.desk==="principal"?"Principal":"SOE professor"})\n   My call: ${d.report?"Report":"Don't report"} | ${STD[d.std]} | ${ROUTES[d.route]}\n   Ruling: ${s.report?"Report":"Don't report"} | ${s.std.map(n=>STD[n]).join(" / ")}\n   Score: ${score(s,d).t}/3\n   Why: ${d.why}\n`;}),`Total: ${pts} of ${done.length*3} points`].join("\n"):"";
+}
+$("#tab-principal").onclick=()=>{st.desk="principal";save();render();};
+$("#tab-professor").onclick=()=>{st.desk="professor";save();render();};
+$("#copy").onclick=async()=>{const t=$("#export");try{await navigator.clipboard.writeText(t.value);$("#copy").textContent="Copied";setTimeout(()=>$("#copy").textContent="Copy my responses",1800);}catch(e){t.focus();t.select();$("#copy").textContent="Selected. Press Ctrl/Cmd+C";}};
+$("#reset").onclick=()=>{$("#reset-confirm").hidden=false;};
+$("#reset-no").onclick=()=>{$("#reset-confirm").hidden=true;};
+$("#reset-yes").onclick=()=>{st={desk:"principal",cur:{principal:0,professor:0},d:{}};save();$("#reset-confirm").hidden=true;render();window.scrollTo(0,0);};
+render();
+</script>
+
+</body>
+</html>
